@@ -30,4 +30,8 @@ return em.find(Evento.class , id);
             System.out.println("non è stato trovato nessun evento con id " + id);
         }
     }
+    public void close(){
+        em.close();
+
+    }
 }
