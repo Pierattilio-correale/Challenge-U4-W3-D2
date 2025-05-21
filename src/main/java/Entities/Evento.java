@@ -1,11 +1,15 @@
+package Entities;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "eventi")
 public class Evento {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
  private int id;
     @Column(nullable = false)
  private  String titolo;
@@ -19,10 +23,17 @@ public class Evento {
     @Column( nullable = false)
  private String descrizione;
 
+    @OneToOne
+
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    @OneToMany(mappedBy = "evento")
+    private List<Partecipazione>partecipazioni;
 
 
-    public Evento(int id, String titolo, LocalDate dataEvento, TipoEvento tipoEvento, int numeroMassimoPartecipanti, String descrizione) {
-        this.id = id;
+    public Evento( String titolo, LocalDate dataEvento, TipoEvento tipoEvento, int numeroMassimoPartecipanti, String descrizione) {
+
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.tipoEvento = tipoEvento;
@@ -81,6 +92,22 @@ public class Evento {
         this.descrizione = descrizione;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public List<Partecipazione> getPartecipazioni() {
+        return partecipazioni;
+    }
+
+    public void setPartecipazioni(List<Partecipazione> partecipazioni) {
+        this.partecipazioni = partecipazioni;
+    }
+
     @Override
     public String toString() {
         return "Evento{" +
@@ -90,6 +117,8 @@ public class Evento {
                 ", tipoEvento=" + tipoEvento +
                 ", numeroMassimoPartecipanti=" + numeroMassimoPartecipanti +
                 ", descrizione='" + descrizione + '\'' +
+                ", location=" + location +
+                ", partecipazioni=" + partecipazioni +
                 '}';
     }
 }
