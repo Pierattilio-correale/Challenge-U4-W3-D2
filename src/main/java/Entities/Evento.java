@@ -1,36 +1,41 @@
 package Entities;
 
+import Entities.Enum.TipoEvento;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Set;
 @Entity
-@Table(name = "eventi")
-public class Evento {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Evento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
- private int id;
+    private int id;
+
     @Column(nullable = false)
- private  String titolo;
-    @Column(name ="data_evento" , nullable = false)
- private LocalDate dataEvento;
+    private String titolo;
+
+    @Column(name = "data_evento", nullable = false)
+    private LocalDate dataEvento;
+
     @Enumerated(EnumType.STRING)
-    @Column(name ="tipo_evento" , nullable = false)
- private TipoEvento tipoEvento;
-    @Column(name ="numero_massimo_partecipanti" , nullable = false)
- private int numeroMassimoPartecipanti;
-    @Column( nullable = false)
- private String descrizione;
+    @Column(name = "tipo_evento", nullable = false)
+    private TipoEvento tipoEvento;
+
+    @Column(name = "numero_massimo_partecipanti", nullable = false)
+    private int numeroMassimoPartecipanti;
+
+    @Column(nullable = false)
+    private String descrizione;
 
     @OneToOne
-
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy = "evento")
-    private List<Partecipazione>partecipazioni;
-
+    @OneToMany(mappedBy = "evento") // Associa alla proprietà 'evento' di Partecipazione
+    private List<Partecipazione> partecipazioni;
 
     public Evento( String titolo, LocalDate dataEvento, TipoEvento tipoEvento, int numeroMassimoPartecipanti, String descrizione) {
 
@@ -107,6 +112,8 @@ public class Evento {
     public void setPartecipazioni(List<Partecipazione> partecipazioni) {
         this.partecipazioni = partecipazioni;
     }
+
+
 
     @Override
     public String toString() {

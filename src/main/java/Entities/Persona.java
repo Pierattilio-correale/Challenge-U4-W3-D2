@@ -1,5 +1,6 @@
 package Entities;
 
+import Entities.Enum.Sesso;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -22,6 +23,8 @@ public class Persona {
     @OneToMany(mappedBy = "persona")
     private List<Partecipazione>listaPartecipazioni;
 
+    @OneToMany(mappedBy = "vincitore")
+    private List<GaraDiAtletica>gareVinte;
 
     public Persona(String nome, String cognome, String email, LocalDate dataDiNascita, Sesso sesso) {
         this.nome = nome;
@@ -90,6 +93,14 @@ public class Persona {
         this.listaPartecipazioni = listaPartecipazioni;
     }
 
+    public List<GaraDiAtletica> getGareVinte() {
+        return gareVinte;
+    }
+
+    public void setGareVinte(List<GaraDiAtletica> gareVinte) {
+        this.gareVinte = gareVinte;
+    }
+
     @Override
     public String toString() {
         return "Persona{" +
@@ -100,6 +111,7 @@ public class Persona {
                 ", dataDiNascita=" + dataDiNascita +
                 ", sesso=" + sesso +
                 ", listaPartecipazioni=" + listaPartecipazioni +
+                ", gareVinte=" + gareVinte +
                 '}';
     }
 }

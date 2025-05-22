@@ -1,5 +1,6 @@
 package Entities;
 
+import Entities.Enum.Stato;
 import jakarta.persistence.*;
 
 @Entity
