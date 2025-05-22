@@ -70,7 +70,7 @@ public class MainEvento {
         partecipazioneDaConfermare.setPersona(p2);
         partecipazioneDao.inserisciPartecipazione(partecipazioneDaConfermare);
 
-       
+
         System.out.println("Concerti in streaming:");
         eventoDao.getConcertiInStreaming(true).forEach(System.out::println);
 
